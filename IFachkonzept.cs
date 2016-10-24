@@ -7,24 +7,27 @@ using System.Xml.Serialization;
 
 namespace ProduktVerwaltungTrippleLayer
 {
-    interface IFachkonzept
+    abstract class IFachkonzept
     {
-        //protected IFachkonzept(IDatenhaltung daten);
-        //protected abstract IDatenhaltung daten;
+        protected IDatenhaltung Datenhaltung;
+        public IFachkonzept(IDatenhaltung Datenhaltung)
+        {
+            this.Datenhaltung = Datenhaltung;
+        }
 
-        List<Customer> ListCustomers();
-        Customer GetCustomer(int customerId);
-        void AddCostomer(Customer c);
-        void DeleteCustomer(int customer);
-        void EditCustomer(Customer c);
+        public abstract List<Customer> ListCustomers();
+        public abstract Customer GetCustomer(int customerId);
+        public abstract void AddCostomer(Customer c);
+        public abstract void DeleteCustomer(int customerID);
+        public abstract void EditCustomer(Customer c);
 
-        List<Product> ListProducts();
-        Product GetProduct(int productId);
-        void AddProduct(Product product);
-        void DeleteProduct(int productId);
-        void EditProduct(Product product);
+        public abstract List<Product> ListProducts();
+        public abstract Product GetProduct(int productId);
+        public abstract void AddProduct(Product product);
+        public abstract void DeleteProduct(int productId);
+        public abstract void EditProduct(Product product);
 
-        List<Order> ListOrders();
-        void AddOrder(Customer c, Product p, int amount, DateTime Date);
+        public abstract List<Order> ListOrders();
+        public abstract void AddOrder(Customer c, Product p, int amount, DateTime Date);
     }
 }
