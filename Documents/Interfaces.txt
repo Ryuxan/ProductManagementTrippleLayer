@@ -8,13 +8,14 @@
 - int id
 - string title
 - double price
+- string typ
 
 ---- Order ----
 - int id
 - Customer customer
 - Product product
 - int amount
-- Date orderDate
+- DateTime orderDate
 
 ---- Interface IFachkonzept ----
 - IDatenhaltung
