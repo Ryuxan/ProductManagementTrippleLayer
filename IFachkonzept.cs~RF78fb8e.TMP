@@ -14,7 +14,7 @@ namespace ProduktVerwaltungTrippleLayer
 
         List<Customer> ListCustomers();
         Customer GetCustomer(int customerId);
-        void AddCustomer(Customer c);
+        void AddCostomer(Customer c);
         void DeleteCustomer(int customer);
         void EditCustomer(Customer c);
 
@@ -25,6 +25,6 @@ namespace ProduktVerwaltungTrippleLayer
         void EditProduct(Product product);
 
         List<Order> ListOrders();
-        void AddOrder(Order o);
+        void AddOrder(Customer c, Product p, int amount, DateTime Date);
     }
 }

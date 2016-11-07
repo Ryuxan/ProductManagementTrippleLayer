@@ -2,13 +2,12 @@
 - int id
 - string firstName
 - string surName
-- List<Product> products
 
 ---- Product ----
 - int id
 - string title
 - double price
-- string typ
+- string type
 
 ---- Order ----
 - int id
@@ -23,7 +22,7 @@
 
 + List<Customer> ListCustomers()
 + Customer GetCustomer(int customerId)
-+ void AddCostomer(Customer c)
++ void AddCustomer(Customer c)
 + void DeleteCustomer(int customer)
 + void EditCustomer(Customer c)
 
@@ -34,7 +33,7 @@
 + void EditProduct(Product product)
 
 + List<Order> ListOrders()
-+ void AddOrder(Customer c, Product p, int amount, Date, date)
++ void AddOrder(Customer c, Product p, int amount, DateTime date)
 
 ---- Interface Datenhaltung ----
 + List<Customer> ListCustomers()

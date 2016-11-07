@@ -25,6 +25,6 @@ namespace ProduktVerwaltungTrippleLayer
         void EditProduct(Product product);
 
         List<Order> ListOrders();
-        void AddOrder(Order o);
+        void AddOrder(Customer c, Product p, int amount, DateTime Date);
     }
 }
