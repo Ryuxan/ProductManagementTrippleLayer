@@ -9,28 +9,28 @@
                     <TextBox HorizontalAlignment="Left" Height="23" Margin="83,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
                     <Label Content="Vorname" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.91,-0.787"/>
                     <Label Content="Nachname" HorizontalAlignment="Left" Margin="292,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.91,-0.787"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="83,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="391,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-                    <Button Content="Kunden anlegen" HorizontalAlignment="Left" Margin="532,10,0,0" VerticalAlignment="Top" Width="101" Click="btn_create_costomer"/>
-                    <DataGrid Margin="10,53,10,10" SelectionChanged="DataGrid_SelectionChanged" Grid.ColumnSpan="2"/>
+                    <TextBox Name="tbx_customer_firstname" HorizontalAlignment="Left" Height="23" Margin="83,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+                    <TextBox Name="tbx_customer_surname" HorizontalAlignment="Left" Height="23" Margin="391,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                    <Button Content="Kunden anlegen" HorizontalAlignment="Left" Margin="532,10,0,0" VerticalAlignment="Top" Width="101" Click="btn_create_customer"/>
+                    <DataGrid Margin="10,53,10,10" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Produkte">
                 <Grid Margin="0,1,0,-1">
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="106,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                    <TextBox Name="tbx_product_name" HorizontalAlignment="Left" Height="23" Margin="106,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
                     <Label Content="Produktname" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.91,-0.787"/>
                     <Label Content="Preis" HorizontalAlignment="Left" Margin="278,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.91,-0.787"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="318,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                    <TextBox Name="tbx_product_price" HorizontalAlignment="Left" Height="23" Margin="318,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
                     <Button Content="Produkt anlegen" HorizontalAlignment="Left" Margin="463,13,0,0" VerticalAlignment="Top" Width="101" Click="btn_create_product"/>
                     <DataGrid Margin="10,53,10,10"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Bestellungen" Margin="-2,-2,2,0">
                 <Grid Margin="0,1,0,-1">
-                    <ComboBox Name="Kundenauswahl"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120"/>
-                    <ComboBox Name="Produktauswahl" HorizontalAlignment="Left" Margin="181,10,0,0" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox Name="cbx_customer_select"  HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox Name="cbx_product_select" HorizontalAlignment="Left" Margin="181,10,0,0" VerticalAlignment="Top" Width="120"/>
                     <Label Content="Menge" HorizontalAlignment="Left" Margin="350,5,0,0" VerticalAlignment="Top"/>
-                    <TextBox HorizontalAlignment="Left" Margin="402,10,0,0" Text="Menge" VerticalAlignment="Top"/>
+                    <TextBox Name="tbx_amount" HorizontalAlignment="Left" Margin="402,10,0,0" Text="Menge" VerticalAlignment="Top"/>
                     <Button Content="Bestellen" HorizontalAlignment="Left" Margin="499,10,0,0" VerticalAlignment="Top" Width="75" Click="btn_create_order"/>
 
                     <DataGrid Margin="10,48,10,10"/>
