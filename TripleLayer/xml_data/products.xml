@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<products>
+  <product>
+    <ID>1</ID>
+    <sFirstName>Bar</sFirstName>
+    <sSurName>Foo</sSurName>
+  </product>
+  <product>
+    <ID>2</ID>
+    <sFirstName>Bar</sFirstName>
+    <sSurName>Foo</sSurName>
+  </product>
+</products>
