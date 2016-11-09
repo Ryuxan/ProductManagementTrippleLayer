@@ -10,13 +10,13 @@ namespace ProduktVerwaltungTrippleLayer
     public class TUI
     {
         IFachkonzept iF;
-        public TUI(IFachkonzept _iF)
+        public TUI(IFachkonzept iF)
         {
-            iF = _iF;
-            doshit(Init());
+            this.iF = iF;
+            DoCommand(Menu());
         }
 
-        public char Init()
+        public char Menu()
         {
             Console.WriteLine("KUNDEN-VERWALTUNGS-SYSTEM");
             Console.WriteLine("");
@@ -39,9 +39,9 @@ namespace ProduktVerwaltungTrippleLayer
             return Console.ReadKey().KeyChar;
         }
 
-        public void doshit(char c)
+        public void DoCommand(char c)
         {
-            switch(c.ToString().ToLower())
+            switch (c.ToString().ToLower())
             {
                 case "a":
                     ListCustomers();
@@ -77,7 +77,7 @@ namespace ProduktVerwaltungTrippleLayer
                     break;
                 default:
                     Console.WriteLine("Keine gültige Eingabe. Bitte wiederholen.");
-                    doshit(Init());
+                    DoCommand(Menu());
                     break;
             }
         }
@@ -114,14 +114,14 @@ namespace ProduktVerwaltungTrippleLayer
 
         void ListCustomers()
         {
-            List<Customer> Customers = iF.ListCustomers();
-            foreach(Customer c in Customers)
+            List<Customer> Customers = this.iF.ListCustomers();
+            foreach (Customer c in Customers)
             {
                 ShowCustomer(c);
             }
             Console.WriteLine("Drücken Sie eine beliebige Taste um zum Menü zurückzukehren.");
             Console.ReadKey();
-            doshit(Init());
+            DoCommand(Menu());
         }
 
         void AddCustomer()
@@ -131,7 +131,7 @@ namespace ProduktVerwaltungTrippleLayer
             c.sFirstName = Console.ReadLine();
             Console.WriteLine("Bitte geben Sie den Nachnamen ein.");
             c.sSurName = Console.ReadLine();
-            iF.AddCustomer(c);
+            this.iF.AddCustomer(c);
         }
 
         void DeleteCustomer()
@@ -139,7 +139,7 @@ namespace ProduktVerwaltungTrippleLayer
             Console.WriteLine("Bitte geben Sie die ID des zu löschenden Kunden ein.");
             int iID = ValidateInt(Console.ReadLine());
             Console.WriteLine("Folgender Kunde wird gelöscht:");
-            ShowCustomer(iF.GetCustomer(iID));
+            ShowCustomer(this.iF.GetCustomer(iID));
             Console.WriteLine("Löschen bestätigen?(y/n)");
             string sKey = Console.ReadKey().KeyChar.ToString();
             while ((sKey != "y") && (sKey != "n"))
@@ -148,8 +148,8 @@ namespace ProduktVerwaltungTrippleLayer
                 sKey = Console.ReadKey().KeyChar.ToString();
             }
             if (sKey == "y")
-                iF.DeleteCustomer(iID);
-            doshit(Init());
+                this.iF.DeleteCustomer(iID);
+            DoCommand(Menu());
         }
 
         void EditCustomer()
@@ -157,7 +157,7 @@ namespace ProduktVerwaltungTrippleLayer
             Console.WriteLine("Bitte geben Sie die ID des zu bearbeitenden Kunden ein.");
             int iID = ValidateInt(Console.ReadLine());
             Console.WriteLine("Folgender Kunde wird geändert:");
-            Customer c = iF.GetCustomer(iID);
+            Customer c = this.iF.GetCustomer(iID);
             ShowCustomer(c);
             Console.WriteLine("Bitte geben Sie den Vornamen ein.");
             c.sFirstName = Console.ReadLine();
@@ -171,20 +171,20 @@ namespace ProduktVerwaltungTrippleLayer
                 sKey = Console.ReadKey().KeyChar.ToString();
             }
             if (sKey == "y")
-                iF.EditCustomer(c);
-            doshit(Init());
+                this.iF.EditCustomer(c);
+            DoCommand(Menu());
         }
 
         void ListProducts()
         {
-            List<Product> Products = iF.ListProducts();
+            List<Product> Products = this.iF.ListProducts();
             foreach (Product p in Products)
             {
                 ShowProduct(p);
             }
             Console.WriteLine("Drücken Sie eine beliebige Taste um zum Menü zurückzukehren.");
             Console.ReadKey();
-            doshit(Init());
+            DoCommand(Menu());
         }
 
         void AddProduct()
@@ -196,7 +196,7 @@ namespace ProduktVerwaltungTrippleLayer
             p.sLabel = Console.ReadLine();
             Console.WriteLine("Bitte geben Sie den Preis ein.");
             p.dPrice = ValidateDouble(Console.ReadLine());
-            iF.AddProduct(p);
+            this.iF.AddProduct(p);
         }
 
         void DeleteProduct()
@@ -204,7 +204,7 @@ namespace ProduktVerwaltungTrippleLayer
             Console.WriteLine("Bitte geben Sie die ID des zu löschenden Produkts ein.");
             int iID = ValidateInt(Console.ReadLine());
             Console.WriteLine("Folgendes Produkt wird gelöscht:");
-            ShowProduct(iF.GetProduct(iID));
+            ShowProduct(this.iF.GetProduct(iID));
             Console.WriteLine("Löschen bestätigen?(y/n)");
             string sKey = Console.ReadKey().KeyChar.ToString();
             while ((sKey != "y") && (sKey != "n"))
@@ -213,8 +213,8 @@ namespace ProduktVerwaltungTrippleLayer
                 sKey = Console.ReadKey().KeyChar.ToString();
             }
             if (sKey == "y")
-                iF.DeleteProduct(iID);
-            doshit(Init());
+                this.iF.DeleteProduct(iID);
+            DoCommand(Menu());
         }
 
         void EditProduct()
@@ -222,7 +222,7 @@ namespace ProduktVerwaltungTrippleLayer
             Console.WriteLine("Bitte geben Sie die ID des zu bearbeitenden Kunden ein.");
             int iID = ValidateInt(Console.ReadLine());
             Console.WriteLine("Folgender Kunde wird geändert:");
-            Product p = iF.GetProduct(iID);
+            Product p = this.iF.GetProduct(iID);
             ShowProduct(p);
             Console.WriteLine("Bitte geben Sie den Typ ein.");
             p.sTyp = Console.ReadLine();
@@ -238,8 +238,8 @@ namespace ProduktVerwaltungTrippleLayer
                 sKey = Console.ReadKey().KeyChar.ToString();
             }
             if (sKey == "y")
-                iF.EditProduct(p);
-            doshit(Init());
+                this.iF.EditProduct(p);
+            DoCommand(Menu());
         }
 
         void ListOrders()
@@ -251,20 +251,20 @@ namespace ProduktVerwaltungTrippleLayer
             }
             Console.WriteLine("Drücken Sie eine beliebige Taste um zum Menü zurückzukehren.");
             Console.ReadKey();
-            doshit(Init());
+            DoCommand(Menu());
         }
 
         void AddOrder()
         {
             Order o = new Order();
             Console.WriteLine("Bitte geben Sie die Kunden-ID ein.");
-            o.Customer = iF.GetCustomer(ValidateInt(Console.ReadLine()));
+            o.Customer = this.iF.GetCustomer(ValidateInt(Console.ReadLine()));
             Console.WriteLine("Bitte geben Sie die Produkt-ID ein.");
-            o.Product=iF.GetProduct(ValidateInt(Console.ReadLine()));
+            o.Product = this.iF.GetProduct(ValidateInt(Console.ReadLine()));
             Console.WriteLine("Bitte geben Sie die Menge ein.");
             o.iAmount = ValidateInt(Console.ReadLine());
             o.OrderDate = DateTime.Now;
-            iF.AddOrder(o);
+            this.iF.AddOrder(o);
         }
 
         int ValidateInt(string s)
