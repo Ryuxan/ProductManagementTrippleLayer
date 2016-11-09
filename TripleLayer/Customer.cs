@@ -5,11 +5,17 @@ using System.Text;
 
 namespace ProduktVerwaltungTrippleLayer
 {
-    class Customer
+    public class Customer
     {
         public int ID { get; set;}
-        public string sFirstName { get; set; }
-        public string sSurName { get; set; }
+        public string sFirstName { get; private set; }
+        public string sSurName { get; private set; }
         public List<Product> lProducts;
+
+        public Customer(string firstName, string surName)
+        {
+            this.sFirstName = firstName;
+            this.sSurName = surName;
+        }
     }
 }
