@@ -82,7 +82,7 @@ namespace ProduktVerwaltungTrippleLayer
             }
         }
 
-        void ShowCustomer(Customer c)
+        public void ShowCustomer(Customer c)
         {
             Console.WriteLine("Kunde " + c.ID + ":");
             Console.WriteLine("Vorname: " + c.sFirstName);
@@ -90,7 +90,7 @@ namespace ProduktVerwaltungTrippleLayer
             Console.WriteLine("-------------------------------");
         }
 
-        void ShowProduct(Product p)
+        public void ShowProduct(Product p)
         {
             Console.WriteLine("Produkt " + p.ID + ":");
             Console.WriteLine("Bezeichnung: " + p.sLabel);
@@ -98,7 +98,7 @@ namespace ProduktVerwaltungTrippleLayer
             Console.WriteLine("Preis: " + p.dPrice);
             Console.WriteLine("-------------------------------");
         }
-        void ShowOrder(Order o)
+        public void ShowOrder(Order o)
         {
             Console.WriteLine("Kunde " + o.Customer.ID + ":");
             Console.WriteLine("Vorname: " + o.Customer.sFirstName);
@@ -112,7 +112,7 @@ namespace ProduktVerwaltungTrippleLayer
             Console.WriteLine("-------------------------------");
         }
 
-        void ListCustomers()
+        public void ListCustomers()
         {
             List<Customer> Customers = this.iF.ListCustomers();
             foreach (Customer c in Customers)
@@ -124,7 +124,7 @@ namespace ProduktVerwaltungTrippleLayer
             DoCommand(Menu());
         }
 
-        void AddCustomer()
+        public void AddCustomer()
         {
             Customer c = new Customer();
             Console.WriteLine("Bitte geben Sie den Vornamen ein.");
@@ -134,7 +134,7 @@ namespace ProduktVerwaltungTrippleLayer
             this.iF.AddCustomer(c);
         }
 
-        void DeleteCustomer()
+        public void DeleteCustomer()
         {
             Console.WriteLine("Bitte geben Sie die ID des zu löschenden Kunden ein.");
             int iID = ValidateInt(Console.ReadLine());
@@ -152,7 +152,7 @@ namespace ProduktVerwaltungTrippleLayer
             DoCommand(Menu());
         }
 
-        void EditCustomer()
+        public void EditCustomer()
         {
             Console.WriteLine("Bitte geben Sie die ID des zu bearbeitenden Kunden ein.");
             int iID = ValidateInt(Console.ReadLine());
@@ -175,7 +175,7 @@ namespace ProduktVerwaltungTrippleLayer
             DoCommand(Menu());
         }
 
-        void ListProducts()
+        public void ListProducts()
         {
             List<Product> Products = this.iF.ListProducts();
             foreach (Product p in Products)
@@ -187,7 +187,7 @@ namespace ProduktVerwaltungTrippleLayer
             DoCommand(Menu());
         }
 
-        void AddProduct()
+        public void AddProduct()
         {
             Product p = new Product();
             Console.WriteLine("Bitte geben Sie den Typ ein.");
@@ -199,7 +199,7 @@ namespace ProduktVerwaltungTrippleLayer
             this.iF.AddProduct(p);
         }
 
-        void DeleteProduct()
+        public void DeleteProduct()
         {
             Console.WriteLine("Bitte geben Sie die ID des zu löschenden Produkts ein.");
             int iID = ValidateInt(Console.ReadLine());
@@ -217,7 +217,7 @@ namespace ProduktVerwaltungTrippleLayer
             DoCommand(Menu());
         }
 
-        void EditProduct()
+        public void EditProduct()
         {
             Console.WriteLine("Bitte geben Sie die ID des zu bearbeitenden Kunden ein.");
             int iID = ValidateInt(Console.ReadLine());
@@ -242,7 +242,7 @@ namespace ProduktVerwaltungTrippleLayer
             DoCommand(Menu());
         }
 
-        void ListOrders()
+        public void ListOrders()
         {
             List<Order> Orders = iF.ListOrders();
             foreach (Order o in Orders)
@@ -254,7 +254,7 @@ namespace ProduktVerwaltungTrippleLayer
             DoCommand(Menu());
         }
 
-        void AddOrder()
+        public void AddOrder()
         {
             Order o = new Order();
             Console.WriteLine("Bitte geben Sie die Kunden-ID ein.");
@@ -267,7 +267,7 @@ namespace ProduktVerwaltungTrippleLayer
             this.iF.AddOrder(o);
         }
 
-        int ValidateInt(string s)
+        public int ValidateInt(string s)
         {
             int i;
             while (!int.TryParse(s, out i))
@@ -278,7 +278,7 @@ namespace ProduktVerwaltungTrippleLayer
             return i;
         }
 
-        double ValidateDouble(string s)
+        public double ValidateDouble(string s)
         {
             double d;
             while (!double.TryParse(s, out d))
