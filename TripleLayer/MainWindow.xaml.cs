@@ -27,6 +27,9 @@ namespace TripleLayer
         {
             this.fachKonzept = fk;
             InitializeComponent();
+
+            cbx_customer_select.ItemsSource = fachKonzept.ListCustomers();
+            cbx_product_select.ItemsSource = fachKonzept.ListProducts();
         }
 
         private void btn_create_order(object sender, RoutedEventArgs e)
