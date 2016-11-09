@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace ProduktVerwaltungTrippleLayer
 {
-    interface IFachkonzept
+    public interface IFachkonzept
     {
         //protected IFachkonzept(IDatenhaltung daten);
         //protected abstract IDatenhaltung daten;
@@ -25,6 +25,6 @@ namespace ProduktVerwaltungTrippleLayer
         void EditProduct(Product product);
 
         List<Order> ListOrders();
-        void AddOrder(Customer c, Product p, int amount, DateTime Date);
+        void AddOrder(Order order);
     }
 }
