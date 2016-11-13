@@ -10,7 +10,6 @@ namespace ProduktVerwaltungTrippleLayer
         public int ID { get; set;}
         public string sFirstName { get; private set; }
         public string sSurName { get; private set; }
-        public List<Product> lProducts;
 
         public Customer(string firstName, string surName)
         {

@@ -1,13 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <customers>
   <customer>
-    <ID>1</ID>
-    <sFirstName>Bar</sFirstName>
-    <sSurName>Foo</sSurName>
+    <id>1</id>
+    <firstName>Bar1</firstName>
+    <surName>Foo1</surName>
   </customer>
   <customer>
-    <ID>2</ID>
-    <sFirstName>Bar</sFirstName>
-    <sSurName>Foo</sSurName>
+    <id>2</id>
+    <firstName>Bar2</firstName>
+    <surName>Foo2</surName>
+  </customer>
+  <customer>
+    <id>3</id>
+    <firstName>Bar3</firstName>
+    <surName>Foo3</surName>
   </customer>
 </customers>

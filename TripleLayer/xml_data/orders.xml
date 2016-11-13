@@ -1,18 +1,3 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <orders>
-  <order>
-    <ID>1</ID>
-    <sFirstName>Bar</sFirstName>
-    <sSurName>Foo</sSurName>
-  </order>
-  <order>
-    <ID>2</ID>
-    <sFirstName>Bar</sFirstName>
-    <sSurName>Foo</sSurName>
-  </order>
-  <order>
-    <ID>4</ID>
-    <sFirstName>Bar</sFirstName>
-    <sSurName>Foo</sSurName>
-  </order>
 </orders>
