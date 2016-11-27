@@ -2,3 +2,7 @@
 	path = ProductManagementTrippleLayer
 	url = "F:/Projects/C#projects/ProductManagementTrippleLayer/TestProjectProductVerwaltung"
 	branch = master
+[submodule "ProductManagementTrippleLayer/TestProjectProductVerwaltung"]
+	path = ProductManagementTrippleLayer/TestProjectProductVerwaltung
+	url = "F:/Projects/C#projects/ProductManagementTrippleLayer/TestProjectProductVerwaltung"
+	branch = master
