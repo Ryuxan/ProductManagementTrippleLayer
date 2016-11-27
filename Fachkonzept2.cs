@@ -4,9 +4,10 @@ using System.Collections.Generic;
 
 namespace ProduktVerwaltungTrippleLayer
 {
-    class Fachkonzept2 : IFachkonzept
+    public class Fachkonzept2 : IFachkonzept
     {
-        public Fachkonzept2(IDatenhaltung datenhaltung) : base(datenhaltung)
+        public Fachkonzept2(IDatenhaltung datenhaltung)
+            : base(datenhaltung)
         {
             if (this.Datenhaltung == null)
             {
@@ -19,9 +20,9 @@ namespace ProduktVerwaltungTrippleLayer
             return this.Datenhaltung.GetCustomer(customerId);
         }
 
-        public override void AddCostomer(Customer c)
+        public override int AddCostomer(Customer c)
         {
-            this.Datenhaltung.AddCostomer(c);
+            return this.Datenhaltung.AddCostomer(c);
         }
 
         public override void DeleteCustomer(int customerID)
@@ -30,7 +31,7 @@ namespace ProduktVerwaltungTrippleLayer
         }
 
         public override void EditCustomer(Customer c)
-        {            
+        {
             this.Datenhaltung.EditCustomer(c);
         }
 
@@ -39,24 +40,24 @@ namespace ProduktVerwaltungTrippleLayer
             return this.Datenhaltung.GetProduct(productId);
         }
 
-        public override void AddProduct(Product product)
+        public override int AddProduct(Product product)
         {
-            this.Datenhaltung.AddProduct(product);
+            return this.Datenhaltung.AddProduct(product);
         }
 
         public override void DeleteProduct(int productId)
         {
-            this.DeleteProduct(productId);
+            this.Datenhaltung.DeleteProduct(productId);
         }
 
         public override void EditProduct(Product product)
         {
-            this.EditProduct(product);
+            this.Datenhaltung.EditProduct(product);
         }
 
-        public override void AddOrder(Customer c, Product p, int amount, DateTime Date)
+        public override int AddOrder(Order ord)
         {
-            this.AddOrder(c, p, amount, Date);
+            return this.Datenhaltung.AddOrder(ord);
         }
 
         public override List<Customer> ListCustomers()

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ProduktVerwaltungTrippleLayer
 {
-    class Order
+    public class Order
     {
         public int ID { get; set; }
         public Product Product;

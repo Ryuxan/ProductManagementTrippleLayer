@@ -7,21 +7,21 @@ using System.Data;
 
 namespace ProduktVerwaltungTrippleLayer
 {
-    class Datenbank : IDatenhaltung
+    public class Datenbank : IDatenhaltung
     {
         private MySqlConnection myConnection;
         private MySqlCommand myCommand;
-        private DataSet dsData;
+        //private DataSet dsData;
         //private List<Customer> CustomerList;
         //private List<Product> ProductList;
         //private List<Order> OrderList;
 
-        DataTable dtCustomer;
+        //DataTable dtCustomer;
 
         string myConnectionString = "SERVER=" + Properties.Settings.Default.Server + ";" +
                             "DATABASE=" + Properties.Settings.Default.Database + ";" +
-                            "UID=" + Properties.Settings.Default.User + ";";
-        //"PASSWORD=triple;";
+                            "UID=" + Properties.Settings.Default.User + ";" +
+                            "PASSWORD=" + Properties.Settings.Default.Password + ";";
 
         public Datenbank()
         {
@@ -30,7 +30,7 @@ namespace ProduktVerwaltungTrippleLayer
                 this.myConnection = new MySqlConnection(this.myConnectionString);
                 //this.myConnection.ConnectionString = this.myConnectionString;
                 this.myConnection.Open();
-                makeDataShema();
+                //makeDataShema();
             }
             catch (MySqlException ex)
             {
@@ -45,13 +45,13 @@ namespace ProduktVerwaltungTrippleLayer
 
         private void makeDataShema()
         {
-            string query = "SELECT * FROM characters WHERE _StreamName = 'root'"; 
+            string query = "SELECT * FROM characters WHERE _StreamName = 'root'";
             this.myCommand = this.myConnection.CreateCommand();
             this.myCommand.CommandText = query;
             MySqlDataAdapter shema = new MySqlDataAdapter(query, myConnection);
             DataTable dt = new DataTable("CharacterInfo");
             shema.Fill(dt);
-            
+
         }
 
         public override List<Customer> ListCustomers()
@@ -105,13 +105,15 @@ namespace ProduktVerwaltungTrippleLayer
             //throw new NotImplementedException();
         }
 
-        public override void AddCostomer(Customer c)
+        public override int AddCostomer(Customer c)
         {
             myCommand = myConnection.CreateCommand();
             //INSERT INTO `kunde` (`KundenNR`, `Vorname`, `Name`) VALUES (NULL, 'Test', 'Test');
-            myCommand.CommandText = "INSERT INTO kunde (KundenNR, Vorname, Name) VALUES (NULL, '" + c.sFirstName + "' , '" + c.sSurName + "');";
+            myCommand.CommandText = "INSERT INTO kunde (KundenNR, Vorname, Name) VALUES (NULL, '" + c.sFirstName +
+                                    "' , '" + c.sSurName + "');";
             myCommand.ExecuteNonQuery();
-            //throw new NotImplementedException();
+
+            return (int)this.myCommand.LastInsertedId;
         }
 
         public override void DeleteCustomer(int customerID)
@@ -120,8 +122,6 @@ namespace ProduktVerwaltungTrippleLayer
             // "DELETE FROM `kunde` WHERE `kunde`.`KundenNR` = 1"
             this.myCommand.CommandText = "DELETE FROM kunde WHERE KundenNR = " + customerID + ";";
             this.myCommand.ExecuteNonQuery();
-
-            //throw new NotImplementedException();
         }
 
         public override void EditCustomer(Customer c)
@@ -205,16 +205,16 @@ namespace ProduktVerwaltungTrippleLayer
             //throw new NotImplementedException();
         }
 
-        public override void AddProduct(Product product)
+        public override int AddProduct(Product product)
         {
             this.myCommand = this.myConnection.CreateCommand();
             //INSERT INTO `produkt` (`ProduktNr`, `Preis`, `Typ`, `Bezeichnung`) VALUES (NULL, '49.99', 'Spiele', 'Doom');
-            this.myCommand.CommandText = "Insert Into Produkt(ProduktNR, Preis, Typ, Bezeichnung)" +
-                "Values(null, " + product.dPrice + ", 'typplatzhalter', '" + product.sLabel + "';";
+            this.myCommand.CommandText = "INSERT INTO produkt(ProduktNR, Preis, Typ, Bezeichnung)" +
+                "Values(NULL, '" + product.dPrice + "', 'typplatzhalter', '" + product.sLabel + "');";
 
             this.myCommand.ExecuteNonQuery();
 
-            //throw new NotImplementedException();
+            return (int)this.myCommand.LastInsertedId;
         }
 
         public override void DeleteProduct(int productId)
@@ -237,15 +237,61 @@ namespace ProduktVerwaltungTrippleLayer
 
         public override List<Order> ListOrders()
         {
-            //TODO make them;
+            MySqlDataReader myReader;
             List<Order> OrderList = new List<Order>();
+            this.myCommand = this.myConnection.CreateCommand();
+
+            this.myCommand.CommandText = "SELECT OrderID, KundenNR, ProduktNr, Menge, Datum" +
+                                        " FROM bestellt";
+            //SELECT `OrderID`,`KundenNR`,`ProduktNr`,`Menge`,`Datum` FROM `bestellt`
+            myReader = myCommand.ExecuteReader();
+
+            //this.dtCustomer.
+
+            while (myReader.Read())
+            {
+                //DataRow dRow;
+                string row = "";
+                //myReader
+                for (int i = 0; i < myReader.FieldCount; ++i)
+                    row += myReader.GetValue(i).ToString() + ";";
+
+                //myReader.GetFieldValue<int>()
+
+                int oID, kID, pID, menge;
+                DateTime dtDate;
+                string[] splitter = row.Split(new char[] { ';', ',' });
+                bool test = int.TryParse(splitter[0], out oID);
+                bool test2 = int.TryParse(splitter[1], out kID);
+                bool test3 = int.TryParse(splitter[2], out pID);
+                bool test4 = int.TryParse(splitter[3], out menge);
+                bool test5 = DateTime.TryParse(splitter[4], out dtDate);
+                Order cache = new Order();
+                cache.ID = oID;
+                cache.Customer = new Customer();
+                cache.Product = new Product();
+                cache.Customer.ID = kID;
+                cache.Product.ID = pID;
+                cache.iAmount = menge;
+                cache.OrderDate = dtDate;
+                OrderList.Add(cache);
+            }
+
             return OrderList;
             //throw new NotImplementedException();
         }
 
-        public override void AddOrder(Customer c, Product p, int amount, DateTime Date)
+        public override int AddOrder(Order ord)
         {
-            //throw new NotImplementedException();
+            //try
+            //{
+            this.myCommand = this.myConnection.CreateCommand();
+            //"INSERT INTO kunde (KundenNR, Vorname, Name) VALUES (NULL, '" + c.sFirstName + "' , '" + c.sSurName + "');";
+            this.myCommand.CommandText = "INSERT INTO bestellt(OrderID, KundenNR, ProduktNr, Menge, Datum)" +
+                                        "VALUES(NULL," + ord.Customer.ID + ", " + ord.Product.ID + ", " + ord.iAmount
+                                        + ", '" + ord.OrderDate.Year + "-" + ord.OrderDate.Month + "-" + ord.OrderDate.Day + "' );";
+            this.myCommand.ExecuteNonQuery();
+            return (int)this.myCommand.LastInsertedId;
         }
     }
 }
