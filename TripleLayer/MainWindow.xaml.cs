@@ -23,9 +23,24 @@ namespace TripleLayer
     {
         private IFachkonzept fachKonzept;
 
-        public MainWindow(IFachkonzept fk)
+        public MainWindow()
         {
-            this.fachKonzept = fk;
+            XMLData xml = new XMLData();
+            Customer c = new Customer("vorname", "nachname");
+
+            var cs = xml.ListCustomers();
+            c.ID = xml.AddCostomer(c);
+            cs = xml.ListCustomers();
+            xml.DeleteCustomer(4);
+            cs = xml.ListCustomers();
+            xml.DeleteCustomer(14);
+            cs = xml.ListCustomers();
+            xml.GetCustomer(3);
+            cs = xml.ListCustomers();
+            xml.GetCustomer(41);
+            cs = xml.ListCustomers();
+
+            this.fachKonzept = null;
             InitializeComponent();
 
             cbx_customer_select.ItemsSource = fachKonzept.ListCustomers();
