@@ -20,10 +20,19 @@ namespace ProduktVerwaltungTrippleLayer
             return this.Datenhaltung.GetCustomer(customerId);
         }
 
-        public override int AddCostomer(Customer c)
+        public override int AddCustomer(Customer c)
         {
-            return this.Datenhaltung.AddCostomer(c);
+            return this.Datenhaltung.AddCustomer(c);
         }
+
+        public override int AddCustomer(string firstName, string surName)
+        {
+            Customer cache = new Customer();
+            cache.sFirstName = firstName;
+            cache.sSurName = surName;
+            return AddCustomer(cache);
+        }
+        
 
         public override void DeleteCustomer(int customerID)
         {
@@ -33,6 +42,15 @@ namespace ProduktVerwaltungTrippleLayer
         public override void EditCustomer(Customer c)
         {
             this.Datenhaltung.EditCustomer(c);
+        }
+
+        public override void EditCustomer(int customerID, string firstName, string surName)
+        {
+            Customer cache = new Customer();
+            cache.ID = customerID;
+            cache.sFirstName = firstName;
+            cache.sSurName = surName;
+            EditCustomer(cache);
         }
 
         public override Product GetProduct(int productId)
@@ -45,6 +63,15 @@ namespace ProduktVerwaltungTrippleLayer
             return this.Datenhaltung.AddProduct(product);
         }
 
+        public override int AddProduct(string label, string type, double price)
+        {
+            Product cache = new Product();
+            cache.sLabel = label;
+            cache.type = type;
+            cache.dPrice = price;
+            return AddProduct(cache);
+        }
+
         public override void DeleteProduct(int productId)
         {
             this.Datenhaltung.DeleteProduct(productId);
@@ -55,9 +82,32 @@ namespace ProduktVerwaltungTrippleLayer
             this.Datenhaltung.EditProduct(product);
         }
 
+        public override void EditProduct(int productID, string label, string type, double price)
+        {
+            Product cache = new Product();
+            cache.sLabel = label;
+            cache.type = type;
+            cache.dPrice = price;
+            EditProduct(cache);
+        }
+
         public override int AddOrder(Order ord)
         {
             return this.Datenhaltung.AddOrder(ord);
+        }
+
+        public override int AddOrder(int customerID, int ProductID, int amount, DateTime date)
+        {
+            Order cache = new Order();
+            Customer customer = new Customer();
+            Product product = new Product();
+            customer.ID = customerID;
+            cache.Customer = customer;
+            product.ID = ProductID;
+            cache.Product = product;
+            cache.iAmount = amount;
+            cache.OrderDate = date;
+            return AddOrder(cache);
         }
 
         public override List<Customer> ListCustomers()

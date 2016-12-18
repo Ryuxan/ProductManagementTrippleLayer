@@ -9,7 +9,8 @@ namespace ProduktVerwaltungTrippleLayer
     {
         public abstract List<Customer> ListCustomers();
         public abstract Customer GetCustomer(int customerId);
-        public abstract int AddCostomer(Customer c);
+        public abstract int AddCustomer(Customer c);
+
         public abstract void DeleteCustomer(int customerID);
         public abstract void EditCustomer(Customer c);
 

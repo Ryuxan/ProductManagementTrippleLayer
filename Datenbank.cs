@@ -105,7 +105,7 @@ namespace ProduktVerwaltungTrippleLayer
             //throw new NotImplementedException();
         }
 
-        public override int AddCostomer(Customer c)
+        public override int AddCustomer(Customer c)
         {
             myCommand = myConnection.CreateCommand();
             //INSERT INTO `kunde` (`KundenNR`, `Vorname`, `Name`) VALUES (NULL, 'Test', 'Test');
@@ -291,6 +291,7 @@ namespace ProduktVerwaltungTrippleLayer
                                         "VALUES(NULL," + ord.Customer.ID + ", " + ord.Product.ID + ", " + ord.iAmount
                                         + ", '" + ord.OrderDate.Year + "-" + ord.OrderDate.Month + "-" + ord.OrderDate.Day + "' );";
             this.myCommand.ExecuteNonQuery();
+            
             return (int)this.myCommand.LastInsertedId;
         }
     }
