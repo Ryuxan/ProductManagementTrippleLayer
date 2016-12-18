@@ -110,7 +110,7 @@ namespace ProduktVerwaltungTrippleLayer
             myCommand = myConnection.CreateCommand();
             //INSERT INTO `kunde` (`KundenNR`, `Vorname`, `Name`) VALUES (NULL, 'Test', 'Test');
             myCommand.CommandText = "INSERT INTO kunde (KundenNR, Vorname, Name) VALUES (NULL, '" + c.sFirstName +
-                                    "' , '" + c.sSurName + "');";
+                                    "', '" + c.sSurName + "');";
             myCommand.ExecuteNonQuery();
 
             return (int)this.myCommand.LastInsertedId;
@@ -182,25 +182,37 @@ namespace ProduktVerwaltungTrippleLayer
             double preis;
             string typ, bezeichnung;
             string row = "";
+            Product cache;
 
             this.myCommand = this.myConnection.CreateCommand();
             //INSERT INTO `produkt` (`ProduktNr`, `Preis`, `Typ`, `Bezeichnung`) VALUES (NULL, '49.99', 'Spiele', 'Doom');
             this.myCommand.CommandText = "SELECT ProduktNR, Preis, Typ, Bezeichnung FROM Produkt WHERE PoduktNR =" + productId + ";";
-            myReader = myCommand.ExecuteReader();
-            myReader.Read();
+            try
+            {
+                myReader = myCommand.ExecuteReader();
+                myReader.Read();
 
-            string[] splitter = row.Split(new char[] { ';', ',' });
-            //TODO: Test Methods einbauen
-            bool test = int.TryParse(splitter[0], out id);
-            bool test2 = double.TryParse(splitter[1], out preis);
-            typ = splitter[2];
-            bezeichnung = splitter[3];
-            Product cache = new Product();
-            cache.ID = id;
-            cache.dPrice = preis;
-            //cache.sLabel = typ;
-            cache.sLabel = bezeichnung;
-
+                string[] splitter = row.Split(new char[] { ';', ',' });
+                bool test = int.TryParse(splitter[0], out id);
+                bool test2 = double.TryParse(splitter[1], out preis);
+                if (test && test2)
+                {
+                    typ = splitter[2];
+                    bezeichnung = splitter[3];
+                    cache = new Product();
+                    cache.ID = id;
+                    cache.dPrice = preis;
+                    //cache.sLabel = typ;
+                    cache.sLabel = bezeichnung;
+                }
+                else
+                    throw new Exception("DataError");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("GetProduct: " + ex.Message);
+                cache = new Product();
+            }
             return cache;
             //throw new NotImplementedException();
         }
@@ -210,7 +222,7 @@ namespace ProduktVerwaltungTrippleLayer
             this.myCommand = this.myConnection.CreateCommand();
             //INSERT INTO `produkt` (`ProduktNr`, `Preis`, `Typ`, `Bezeichnung`) VALUES (NULL, '49.99', 'Spiele', 'Doom');
             this.myCommand.CommandText = "INSERT INTO produkt(ProduktNR, Preis, Typ, Bezeichnung)" +
-                "Values(NULL, '" + product.dPrice + "', 'typplatzhalter', '" + product.sLabel + "');";
+                "Values(NULL, '" + product.dPrice + "', 'Spiele', '" + product.sLabel + "');";
 
             this.myCommand.ExecuteNonQuery();
 
@@ -247,34 +259,45 @@ namespace ProduktVerwaltungTrippleLayer
             myReader = myCommand.ExecuteReader();
 
             //this.dtCustomer.
-
-            while (myReader.Read())
+            try
             {
-                //DataRow dRow;
-                string row = "";
-                //myReader
-                for (int i = 0; i < myReader.FieldCount; ++i)
-                    row += myReader.GetValue(i).ToString() + ";";
+                while (myReader.Read())
+                {
+                    //DataRow dRow;
+                    string row = "";
+                    //myReader
+                    for (int i = 0; i < myReader.FieldCount; ++i)
+                        row += myReader.GetValue(i).ToString() + ";";
 
-                //myReader.GetFieldValue<int>()
+                    //myReader.GetFieldValue<int>()
 
-                int oID, kID, pID, menge;
-                DateTime dtDate;
-                string[] splitter = row.Split(new char[] { ';', ',' });
-                bool test = int.TryParse(splitter[0], out oID);
-                bool test2 = int.TryParse(splitter[1], out kID);
-                bool test3 = int.TryParse(splitter[2], out pID);
-                bool test4 = int.TryParse(splitter[3], out menge);
-                bool test5 = DateTime.TryParse(splitter[4], out dtDate);
-                Order cache = new Order();
-                cache.ID = oID;
-                cache.Customer = new Customer();
-                cache.Product = new Product();
-                cache.Customer.ID = kID;
-                cache.Product.ID = pID;
-                cache.iAmount = menge;
-                cache.OrderDate = dtDate;
-                OrderList.Add(cache);
+                    int oID, kID, pID, menge;
+                    DateTime dtDate;
+                    string[] splitter = row.Split(new char[] { ';', ',' });
+                    bool test = int.TryParse(splitter[0], out oID);
+                    bool test2 = int.TryParse(splitter[1], out kID);
+                    bool test3 = int.TryParse(splitter[2], out pID);
+                    bool test4 = int.TryParse(splitter[3], out menge);
+                    bool test5 = DateTime.TryParse(splitter[4], out dtDate);
+                    if (test && test2 && test3 && test4 && test5)
+                    {
+                        Order cache = new Order();
+                        cache.ID = oID;
+                        cache.Customer = new Customer();
+                        cache.Product = new Product();
+                        cache.Customer.ID = kID;
+                        cache.Product.ID = pID;
+                        cache.iAmount = menge;
+                        cache.OrderDate = dtDate;
+                        OrderList.Add(cache);
+                    }
+                    else
+                        throw new Exception("DataError");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("GetProduct: " + ex.Message);
             }
 
             return OrderList;
@@ -283,16 +306,23 @@ namespace ProduktVerwaltungTrippleLayer
 
         public override int AddOrder(Order ord)
         {
-            //try
-            //{
-            this.myCommand = this.myConnection.CreateCommand();
-            //"INSERT INTO kunde (KundenNR, Vorname, Name) VALUES (NULL, '" + c.sFirstName + "' , '" + c.sSurName + "');";
-            this.myCommand.CommandText = "INSERT INTO bestellt(OrderID, KundenNR, ProduktNr, Menge, Datum)" +
-                                        "VALUES(NULL," + ord.Customer.ID + ", " + ord.Product.ID + ", " + ord.iAmount
-                                        + ", '" + ord.OrderDate.Year + "-" + ord.OrderDate.Month + "-" + ord.OrderDate.Day + "' );";
-            this.myCommand.ExecuteNonQuery();
-            
-            return (int)this.myCommand.LastInsertedId;
+            try
+            {
+                this.myCommand = this.myConnection.CreateCommand();
+                //"INSERT INTO kunde (KundenNR, Vorname, Name) VALUES (NULL, '" + c.sFirstName + "' , '" + c.sSurName + "');";
+                this.myCommand.CommandText = "INSERT INTO bestellt(OrderID, KundenNR, ProduktNr, Menge, Datum)" +
+                                            "VALUES(NULL," + ord.Customer.ID + ", " + ord.Product.ID + ", " + ord.iAmount
+                                            + ", '" + ord.OrderDate.Year + "-" + ord.OrderDate.Month + "-" + ord.OrderDate.Day + "' );";
+                this.myCommand.ExecuteNonQuery();
+
+                return (int)this.myCommand.LastInsertedId;
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.MessageBox.Show(ex.Message);
+                System.Diagnostics.Debug.WriteLine("Datebase AddOrder: " + ex.Message);
+                return -1;
+            }
         }
     }
 }

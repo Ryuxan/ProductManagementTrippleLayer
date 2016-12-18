@@ -22,5 +22,6 @@ namespace ProduktVerwaltungTrippleLayer
 
         public abstract List<Order> ListOrders();
         public abstract int AddOrder(Order ord);
+        public abstract Order GetOrder(int orderId);
     }
 }

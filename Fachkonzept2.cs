@@ -124,5 +124,64 @@ namespace ProduktVerwaltungTrippleLayer
         {
             return this.Datenhaltung.ListOrders();
         }
+
+        public override string GetCustomerName(int customerId)
+        {
+            return this.Datenhaltung.GetCustomer(customerId).sSurName;
+        }
+
+        public override string GetCustomerFirstName(int customerId)
+        {
+            return this.Datenhaltung.GetCustomer(customerId).sFirstName;
+        }
+
+        public override string GetProductLabel(int productId)
+        {
+            return this.Datenhaltung.GetProduct(productId).sLabel;
+        }
+
+        public override double GetProductPrice(int productId)
+        {
+            return this.Datenhaltung.GetProduct(productId).dPrice;
+        }
+
+        public override string GetProductTyp(int productId)
+        {
+            return this.Datenhaltung.GetProduct(productId).type;
+        }
+
+        public override void AddProduct(string sLabel, double dPrice)
+        {
+            Product cache = new Product();
+            cache.sLabel = sLabel;
+            cache.dPrice = dPrice;
+
+            this.AddProduct(cache);
+        }
+
+        public override Order GetOrder(int orderId)
+        {
+            return this.Datenhaltung.GetOrder(orderId);
+        }
+
+        public override int GetOrderCustomerId(int orderId)
+        {
+            return this.Datenhaltung.GetOrder(orderId).Customer.ID;
+        }
+
+        public override int GetOrderProductId(int orderId)
+        {
+            return this.Datenhaltung.GetOrder(orderId).Product.ID;
+        }
+
+        public override int GetOrderAmount(int orderId)
+        {
+            return this.Datenhaltung.GetOrder(orderId).iAmount;
+        }
+
+        public override DateTime GetOrderDate(int orderId)
+        {
+            return this.Datenhaltung.GetOrder(orderId).OrderDate;
+        }
     }
 }
