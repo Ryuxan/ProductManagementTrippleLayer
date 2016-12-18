@@ -46,7 +46,6 @@ namespace TripleLayer
                     )
                     {
                         ID = Convert.ToInt16(c.Descendants("id").FirstOrDefault().Value)
-
                     }
                 ).FirstOrDefault();
             return customer;
@@ -56,13 +55,13 @@ namespace TripleLayer
         {
             XDocument xml = XDocument.Load(customerPath);
             var lastCustomer = xml.Root.Descendants("customer").Last();
-            int newId = Convert.ToInt16(lastCustomer.Descendants("id").FirstOrDefault()) + 1;
+            int newId = Convert.ToInt16(lastCustomer.Descendants("id").FirstOrDefault().Value) + 1;
 
             XElement newCustomer = new XElement(
                 "customer",
                 new XElement("id", newId),
                 new XElement("firstName", customer.sFirstName),
-                new XElement("surname", customer.sSurName)
+                new XElement("surName", customer.sSurName)
             );
             xml.Element("customers").Add(newCustomer);
             xml.Save(customerPath);
@@ -182,7 +181,7 @@ namespace TripleLayer
             var orders = elements.Select(o => new Order
                 (
                     c: GetCustomer(Convert.ToInt16(o.Descendants("customerId").FirstOrDefault().Value)),
-                    p: GetProduct(Convert.ToInt16(o.Descendants("orderId").FirstOrDefault().Value)),
+                    p: GetProduct(Convert.ToInt16(o.Descendants("productId").FirstOrDefault().Value)),
                     amount: Convert.ToInt16(o.Descendants("amount").FirstOrDefault().Value),
                     orderDate: new DateTime(Convert.ToInt64(o.Descendants("orderDate").FirstOrDefault().Value))
                 )
