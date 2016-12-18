@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace ProduktVerwaltungTrippleLayer
+{
+    public abstract class IDatenhaltung
+    {
+<<<<<<< HEAD
+        public abstract List<Customer> ListCustomers();
+        public abstract Customer GetCustomer(int customerId);
+        public abstract int AddCustomer(Customer c);
+=======
+        List<Customer> ListCustomers();
+        Customer GetCustomer(int customerId);
+        void AddCustomer(Customer c);
+        void DeleteCustomer(int customerID);
+        void EditCustomer(Customer c);
+>>>>>>> origin/TUI_FK2
+
+        public abstract void DeleteCustomer(int customerID);
+        public abstract void EditCustomer(Customer c);
+
+<<<<<<< HEAD
+        public abstract List<Product> ListProducts();
+        public abstract Product GetProduct(int productId);
+        public abstract int AddProduct(Product product);
+        public abstract void DeleteProduct(int productId);
+        public abstract void EditProduct(Product product);
+
+        public abstract List<Order> ListOrders();
+        public abstract int AddOrder(Order ord);
+        public abstract Order GetOrder(int orderId);
+=======
+        List<Order> ListOrders();
+        void AddOrder(Order o);
+        Order GetOrder(int orderId);
+>>>>>>> origin/TUI_FK2
+    }
+}

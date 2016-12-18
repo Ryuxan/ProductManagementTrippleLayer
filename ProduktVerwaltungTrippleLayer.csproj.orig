@@ -75,9 +75,13 @@
     <Page Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+<<<<<<< HEAD
     </Page>
+=======
+    </ApplicationDefinition>
     <Compile Include="Fachkonzept1.cs" />
     <Compile Include="TUI.cs" />
+>>>>>>> origin/TUI_FK2
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

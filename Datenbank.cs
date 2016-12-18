@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.OleDb;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Linq;
 
 
 namespace ProduktVerwaltungTrippleLayer
@@ -323,6 +324,13 @@ namespace ProduktVerwaltungTrippleLayer
                 System.Diagnostics.Debug.WriteLine("Datebase AddOrder: " + ex.Message);
                 return -1;
             }
+        }
+
+        public override Order GetOrder(int orderId)
+        {
+            List<Order> OrderList = ListOrders();
+            OrderList = OrderList.Where(x => x.ID == orderId).ToList();
+            return OrderList.First();
         }
     }
 }

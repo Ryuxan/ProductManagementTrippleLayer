@@ -10,6 +10,10 @@ namespace ProduktVerwaltungTrippleLayer
         public int ID { get; set; }
         public string sLabel { get; set; }
         public double dPrice { get; set; }
+<<<<<<< HEAD
+        public string type { get; set; }
+=======
         public string sTyp { get; set; }
+>>>>>>> origin/TUI_FK2
     }
 }

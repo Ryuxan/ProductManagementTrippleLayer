@@ -8,7 +8,8 @@ namespace ProduktVerwaltungTrippleLayer
         public static void Main(String[] args)
         {
             //App.Main();
-            System.Diagnostics.Debug.WriteLine("Hello");
+            //System.Diagnostics.Debug.WriteLine("Hello");
+            new TUI(new Fachkonzept2(new Datenbank()));
             //Customer c = new Customer();
             //c.ID = 2;
             //new Random().Next().ToString();
