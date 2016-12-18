@@ -22,26 +22,37 @@ namespace TripleLayer
     public partial class MainWindow : Window
     {
         private IFachkonzept fachKonzept;
+        private XMLData xmlData;
 
-        public MainWindow(IFachkonzept fk)
+        public MainWindow()
         {
-            this.fachKonzept = fk;
+            //this.fachKonzept = fk;
+            xmlData = new XMLData();
             InitializeComponent();
 
-            cbx_customer_select.ItemsSource = fachKonzept.ListCustomers();
-            cbx_product_select.ItemsSource = fachKonzept.ListProducts();
+            //cbx_customer_select.ItemsSource = fachKonzept.ListCustomers();
+            cbx_customer_select.ItemsSource = xmlData.ListCustomers();
+            //cbx_product_select.ItemsSource = fachKonzept.ListProducts();
+            cbx_product_select.ItemsSource = xmlData.ListProducts();
+
+            dtg_customers.ItemsSource = xmlData.ListCustomers();
+            dtg_products.ItemsSource = xmlData.ListProducts();
+            dtg_orders.ItemsSource = xmlData.ListOrders();
         }
 
         private void btn_create_order(object sender, RoutedEventArgs e)
         {
             int customerId = 0;
             int productId = 0;
-            Customer c = fachKonzept.GetCustomer(customerId);
-            Product p = fachKonzept.GetProduct(productId);
+            //Customer c = fachKonzept.GetCustomer(customerId);
+            Customer c = xmlData.GetCustomer(customerId);
+            //Product p = fachKonzept.GetProduct(productId);
+            Product p = xmlData.GetProduct(productId);
             int amount;
             int.TryParse(tbx_amount.Text, out amount);
-            Order order = new Order(c, p, amount, DateTime.Now);        
-            fachKonzept.AddOrder(order);
+            Order order = new Order(c, p, amount, DateTime.Now);
+            //fachKonzept.AddOrder(order);
+            xmlData.AddOrder(order);
         }
 
         private void btn_create_product(object sender, RoutedEventArgs e)
@@ -50,7 +61,8 @@ namespace TripleLayer
             double price;
             double.TryParse(tbx_product_price.Text, out price);
             Product product = new Product(label, price);
-            fachKonzept.AddProduct(product);
+            //fachKonzept.AddProduct(product);
+            xmlData.AddProduct(product);
         }
 
         private void btn_create_customer(object sender, RoutedEventArgs e)
@@ -58,7 +70,8 @@ namespace TripleLayer
             string firstName = tbx_customer_firstname.Text;
             string surName = tbx_customer_surname.Text;
             Customer customer = new Customer(firstName, surName);
-            fachKonzept.AddCostomer(customer);
+            //fachKonzept.AddCostomer(customer);
+            xmlData.AddCostomer(customer);
         }
     }
 }
