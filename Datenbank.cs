@@ -324,5 +324,10 @@ namespace ProduktVerwaltungTrippleLayer
                 return -1;
             }
         }
+
+        public override Order GetOrder(int orderId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -7,7 +7,11 @@ using System.Xml.Serialization;
 
 namespace ProduktVerwaltungTrippleLayer
 {
+<<<<<<< HEAD
     public abstract class IFachkonzept
+=======
+    public interface IFachkonzept
+>>>>>>> xml_datasource
     {
         protected IDatenhaltung Datenhaltung;
         public IFachkonzept(IDatenhaltung Datenhaltung)
@@ -16,7 +20,7 @@ namespace ProduktVerwaltungTrippleLayer
         }
 
         public abstract List<int> ListCustomers();
-        //public abstract List<Customer> ListCustomers();
+        public abstract List<Customer> ListCustomers();
         //public abstract List<Object> ListCustomersasobject();
         public abstract Customer GetCustomer(int customerId);
         public abstract string GetCustomerName(int customerId);
@@ -28,8 +32,9 @@ namespace ProduktVerwaltungTrippleLayer
         public abstract void EditCustomer(Customer c);
         public abstract void EditCustomer(int customerID, string firstName, string surName);
 
+<<<<<<< HEAD
         public abstract List<int> ListProducts();
-        //public abstract List<Product> ListProducts();
+        public abstract List<Product> ListProducts();
         public abstract Product GetProduct(int productId);
         public abstract string GetProductLabel(int productId);
         public abstract double GetProductPrice(int productId);
@@ -39,7 +44,7 @@ namespace ProduktVerwaltungTrippleLayer
         public abstract int AddProduct(string label, string type, double price);
         public abstract void DeleteProduct(int productId);
         public abstract void EditProduct(Product product);
-        public abstract void EditProduct(int productId, string sLabel, double dPrice);
+        public void EditProduct(int productId, string sLabel, double dPrice);
         public abstract void EditProduct(int productID, string label, string type, double price);
         public abstract List<Order> ListOrders();
         public abstract int AddOrder(Order ord);
@@ -49,6 +54,10 @@ namespace ProduktVerwaltungTrippleLayer
         public abstract int GetOrderProductId(int orderId);
         public abstract int GetOrderAmount(int orderId);
         public abstract DateTime GetOrderDate(int orderId);
+=======
+        List<Order> ListOrders();
+        void AddOrder(Order order);
+>>>>>>> xml_datasource
     }
 }
 

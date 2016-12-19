@@ -10,9 +10,7 @@ namespace ProduktVerwaltungTrippleLayer
         public int ID { get; set; }
         public string sLabel { get; set; }
         public double dPrice { get; set; }
-        public string type { get; set; }
 
-        public Product(){ }
         public Product(string label, double price)
         {
             this.sLabel = label;

@@ -43,8 +43,8 @@ namespace TripleLayer
             this.fachKonzept = null;
             InitializeComponent();
 
-            //cbx_customer_select.ItemsSource = fachKonzept.ListCustomers();
-            //cbx_product_select.ItemsSource = fachKonzept.ListProducts();
+            cbx_customer_select.ItemsSource = fachKonzept.ListCustomers();
+            cbx_product_select.ItemsSource = fachKonzept.ListProducts();
         }
 
         private void btn_create_order(object sender, RoutedEventArgs e)
@@ -73,7 +73,7 @@ namespace TripleLayer
             string firstName = tbx_customer_firstname.Text;
             string surName = tbx_customer_surname.Text;
             Customer customer = new Customer(firstName, surName);
-            //fachKonzept.AddCostomer(customer);
+            fachKonzept.AddCostomer(customer);
         }
     }
 }
