@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace TripleLayer
+namespace ProduktVerwaltungTrippleLayer
 {
     public class XMLData : IDatenhaltung
     {
@@ -14,7 +14,7 @@ namespace TripleLayer
         private const string ordersPath = @".\xml_data\orders.xml";
         private const string productsPath = @".\xml_data\products.xml";
 
-        public List<Customer> ListCustomers()
+        public override List<Customer> ListCustomers()
         {
             XDocument xml = XDocument.Load(customerPath);
             var elements = xml.Root.Descendants("customer");
@@ -32,7 +32,7 @@ namespace TripleLayer
             return customers.ToList();
         }
 
-        public Customer GetCustomer(int customerId)
+        public override Customer GetCustomer(int customerId)
         {
             XDocument xml = XDocument.Load(customerPath);
             var elements = xml.Root.Descendants("customer");
@@ -51,7 +51,7 @@ namespace TripleLayer
             return customer;
         }
 
-        public int AddCostomer(Customer customer)
+        public override int AddCustomer(Customer customer)
         {
             XDocument xml = XDocument.Load(customerPath);
             var lastCustomer = xml.Root.Descendants("customer").Last();
@@ -69,7 +69,7 @@ namespace TripleLayer
             return newId;
         }
 
-        public void DeleteCustomer(int customerID)
+        public override void DeleteCustomer(int customerID)
         {
             XDocument xml = XDocument.Load(customerPath);
 
@@ -80,7 +80,7 @@ namespace TripleLayer
             xml.Save(customerPath);
         }
 
-        public void EditCustomer(Customer customer)
+        public override void EditCustomer(Customer customer)
         {
             XDocument xml = XDocument.Load(customerPath);
 
@@ -93,7 +93,7 @@ namespace TripleLayer
             xml.Save(customerPath);
         }
 
-        public List<Product> ListProducts()
+        public override List<Product> ListProducts()
         {
             XDocument xml = XDocument.Load(productsPath);
             var elements = xml.Root.Descendants("product");
@@ -111,7 +111,7 @@ namespace TripleLayer
             return products.ToList();
         }
 
-        public Product GetProduct(int productId)
+        public override Product GetProduct(int productId)
         {
             XDocument xml = XDocument.Load(productsPath);
             var elements = xml.Root.Descendants("product");
@@ -131,7 +131,7 @@ namespace TripleLayer
             return product;
         }
 
-        public int AddProduct(Product product)
+        public override int AddProduct(Product product)
         {
             XDocument xml = XDocument.Load(productsPath);
             var lastProduct = xml.Root.Descendants("product").Last();
@@ -149,7 +149,7 @@ namespace TripleLayer
             return newId;
         }
 
-        public void DeleteProduct(int productId)
+        public override void DeleteProduct(int productId)
         {
             XDocument xml = XDocument.Load(productsPath);
 
@@ -160,7 +160,7 @@ namespace TripleLayer
             xml.Save(productsPath);
         }
 
-        public void EditProduct(Product product)
+        public override void EditProduct(Product product)
         {
             XDocument xml = XDocument.Load(productsPath);
 
@@ -173,7 +173,7 @@ namespace TripleLayer
             xml.Save(productsPath);
         }
 
-        public List<Order> ListOrders()
+        public override List<Order> ListOrders()
         {
             XDocument xml = XDocument.Load(ordersPath);
             var elements = xml.Root.Descendants("order");
@@ -190,7 +190,7 @@ namespace TripleLayer
             return orders.ToList();
         }
 
-        public int AddOrder(Order order)
+        public override int AddOrder(Order order)
         {
             XDocument xml = XDocument.Load(ordersPath);
             // todo check empty
@@ -209,6 +209,11 @@ namespace TripleLayer
             xml.Save(ordersPath);
 
             return newId;
+        }
+
+        public override Order GetOrder(int orderId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
