@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 namespace ProduktVerwaltungTrippleLayer
@@ -32,7 +33,7 @@ namespace ProduktVerwaltungTrippleLayer
             cache.sSurName = surName;
             return AddCustomer(cache);
         }
-        
+
 
         public override void DeleteCustomer(int customerID)
         {
@@ -67,7 +68,7 @@ namespace ProduktVerwaltungTrippleLayer
         {
             Product cache = new Product();
             cache.sLabel = label;
-            cache.type = type;
+            cache.sTyp = type;
             cache.dPrice = price;
             return AddProduct(cache);
         }
@@ -86,7 +87,7 @@ namespace ProduktVerwaltungTrippleLayer
         {
             Product cache = new Product();
             cache.sLabel = label;
-            cache.type = type;
+            cache.sTyp = type;
             cache.dPrice = price;
             EditProduct(cache);
         }
@@ -110,20 +111,20 @@ namespace ProduktVerwaltungTrippleLayer
             return AddOrder(cache);
         }
 
-        public override List<Customer> ListCustomers()
-        {
-            return this.Datenhaltung.ListCustomers();
-        }
+        //public override List<Customer> ListCustomers()
+        //{
+        //    return this.Datenhaltung.ListCustomers();
+        //}
 
-        public override List<Product> ListProducts()
-        {
-            return this.Datenhaltung.ListProducts();
-        }
+        //public override List<Product> ListProducts()
+        //{
+        //    return this.Datenhaltung.ListProducts();
+        //}
 
-        public override List<Order> ListOrders()
-        {
-            return this.Datenhaltung.ListOrders();
-        }
+        //public override List<Order> ListOrders()
+        //{
+        //    return this.Datenhaltung.ListOrders();
+        //}
 
         public override string GetCustomerName(int customerId)
         {
@@ -147,16 +148,16 @@ namespace ProduktVerwaltungTrippleLayer
 
         public override string GetProductTyp(int productId)
         {
-            return this.Datenhaltung.GetProduct(productId).type;
+            return this.Datenhaltung.GetProduct(productId).sTyp;
         }
 
-        public override void AddProduct(string sLabel, double dPrice)
+        public override int AddProduct(string sLabel, double dPrice)
         {
             Product cache = new Product();
             cache.sLabel = sLabel;
             cache.dPrice = dPrice;
 
-            this.AddProduct(cache);
+            return this.AddProduct(cache);
         }
 
         public override Order GetOrder(int orderId)
@@ -182,6 +183,58 @@ namespace ProduktVerwaltungTrippleLayer
         public override DateTime GetOrderDate(int orderId)
         {
             return this.Datenhaltung.GetOrder(orderId).OrderDate;
+        }
+
+        public override void EditProduct(int productId, string sLabel, double dPrice)
+        {
+            Product cache = new Product();
+            cache.ID = productId;
+            cache.sLabel = sLabel;
+            cache.dPrice = dPrice;
+
+            this.EditProduct(cache);
+        }
+
+        public override List<int> ListCustomers()
+        {
+            List<Customer> customerList = this.Datenhaltung.ListCustomers();
+            List<int> customerIDS = new List<int>();
+            foreach(Customer c in customerList)
+            {
+                customerIDS.Add(c.ID);
+            }
+
+            return customerIDS;
+        }
+
+        public override List<int> ListProducts()
+        {
+            List<Product> productList = this.Datenhaltung.ListProducts();
+            List<int> prodIDs = new List<int>();
+            foreach (Product p in productList)
+            {
+                prodIDs.Add(p.ID);
+            }
+
+            return prodIDs;
+        }
+
+        public override List<int> ListOrders()
+        {
+            List<Order> Orders = this.Datenhaltung.ListOrders();
+            List<int> OrderIDs = new List<int>();
+            foreach (Order o in Orders)
+            {
+                OrderIDs.Add(o.ID);
+            }
+            return OrderIDs;
+        }
+
+        public override double GetOrderTotalPrice(int orderId)
+        {
+            int iAmount = GetOrderAmount(orderId);
+            double dPrice = GetProductPrice(GetOrderProductId(orderId));
+            return dPrice * iAmount;
         }
     }
 }
