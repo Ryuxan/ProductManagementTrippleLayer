@@ -22,7 +22,6 @@ namespace ProduktVerwaltungTrippleLayer
         public abstract void DeleteCustomer(int customerID);
         public abstract void EditCustomer(Customer c);
 
-<<<<<<< HEAD
         public abstract List<Product> ListProducts();
         public abstract Product GetProduct(int productId);
         public abstract int AddProduct(Product product);
@@ -33,6 +32,18 @@ namespace ProduktVerwaltungTrippleLayer
         public abstract int AddOrder(Order ord);
         public abstract Order GetOrder(int orderId);
 =======
+        List<Customer> ListCustomers();
+        Customer GetCustomer(int customerId);
+        int AddCostomer(Customer c);
+        void DeleteCustomer(int customerID);
+        void EditCustomer(Customer c);
+
+        List<Product> ListProducts();
+        Product GetProduct(int productId);
+        int AddProduct(Product product);
+        void DeleteProduct(int productId);
+        void EditProduct(Product product);
+
         List<Order> ListOrders();
         void AddOrder(Order o);
         Order GetOrder(int orderId);

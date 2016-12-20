@@ -13,8 +13,6 @@ namespace ProduktVerwaltungTrippleLayer
         public int iAmount;
         public DateTime OrderDate;
 
-        public Order() { }
-
         public Order(Customer c, Product p, int amount, DateTime orderDate)
         {
             this.Customer = c;

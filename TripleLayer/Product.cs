@@ -10,15 +10,11 @@ namespace ProduktVerwaltungTrippleLayer
         public int ID { get; set; }
         public string sLabel { get; set; }
         public double dPrice { get; set; }
-<<<<<<< HEAD
-        public string type { get; set; }
-=======
 
         public Product(string label, double price)
         {
             this.sLabel = label;
             this.dPrice = price;
         }
->>>>>>> xml_datasource
     }
 }

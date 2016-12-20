@@ -7,9 +7,9 @@ namespace ProduktVerwaltungTrippleLayer
         [STAThread]
         public static void Main(String[] args)
         {
-            //App.Main();
-            //System.Diagnostics.Debug.WriteLine("Hello");
-            new TUI(new Fachkonzept2(new Datenbank()));
+            Gui wind = new Gui(new Fachkonzept2(new XMLData()));
+            wind.ShowDialog();
+            
             //Customer c = new Customer();
             //c.ID = 2;
             //new Random().Next().ToString();

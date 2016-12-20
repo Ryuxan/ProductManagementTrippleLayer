@@ -15,7 +15,6 @@ namespace ProduktVerwaltungTrippleLayer
             this.Datenhaltung = Datenhaltung;
         }
 
-<<<<<<< HEAD
         public abstract List<int> ListCustomers();
         public abstract List<Customer> ListCustomers();
         //public abstract List<Object> ListCustomersasobject();
@@ -29,6 +28,7 @@ namespace ProduktVerwaltungTrippleLayer
         public abstract void EditCustomer(Customer c);
         public abstract void EditCustomer(int customerID, string firstName, string surName);
 
+<<<<<<< HEAD
         public abstract List<int> ListProducts();
         public abstract List<Product> ListProducts();
         public abstract Product GetProduct(int productId);
