@@ -14,37 +14,46 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TripleLayer
+namespace ProduktVerwaltungTrippleLayer
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// Interaktionslogik für Gui.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Gui : Window
     {
         private IFachkonzept fachKonzept;
 
-        public MainWindow()
+        public Gui()
         {
-            XMLData xml = new XMLData();
-            Customer c = new Customer("vorname", "nachname");
+            //XMLData xml = new XMLData();
+            //Customer c = new Customer("vorname", "nachname");
 
-            var cs = xml.ListCustomers();
-            c.ID = xml.AddCostomer(c);
-            cs = xml.ListCustomers();
-            xml.DeleteCustomer(4);
-            cs = xml.ListCustomers();
-            xml.DeleteCustomer(14);
-            cs = xml.ListCustomers();
-            xml.GetCustomer(3);
-            cs = xml.ListCustomers();
-            xml.GetCustomer(41);
-            cs = xml.ListCustomers();
+            //var cs = xml.ListCustomers();
+            //c.ID = xml.AddCustomer(c);
+            //cs = xml.ListCustomers();
+            //xml.DeleteCustomer(4);
+            //cs = xml.ListCustomers();
+            //xml.DeleteCustomer(14);
+            //cs = xml.ListCustomers();
+            //xml.GetCustomer(3);
+            //cs = xml.ListCustomers();
+            //xml.GetCustomer(41);
+            //cs = xml.ListCustomers();
 
             this.fachKonzept = null;
             InitializeComponent();
 
             //cbx_customer_select.ItemsSource = fachKonzept.ListCustomers();
             //cbx_product_select.ItemsSource = fachKonzept.ListProducts();
+        }
+
+        public Gui(IFachkonzept iF)
+        {
+            this.fachKonzept = iF;
+            InitializeComponent();
+            cbx_customer_select.ItemsSource = fachKonzept.ListCustomers();
+            cbx_product_select.ItemsSource = fachKonzept.ListProducts();            
+           
         }
 
         private void btn_create_order(object sender, RoutedEventArgs e)
@@ -55,7 +64,7 @@ namespace TripleLayer
             Product p = fachKonzept.GetProduct(productId);
             int amount;
             int.TryParse(tbx_amount.Text, out amount);
-            Order order = new Order(c, p, amount, DateTime.Now);        
+            Order order = new Order(c, p, amount, DateTime.Now);
             fachKonzept.AddOrder(order);
         }
 
@@ -73,7 +82,7 @@ namespace TripleLayer
             string firstName = tbx_customer_firstname.Text;
             string surName = tbx_customer_surname.Text;
             Customer customer = new Customer(firstName, surName);
-            //fachKonzept.AddCostomer(customer);
+            fachKonzept.AddCustomer(customer);
         }
     }
 }
