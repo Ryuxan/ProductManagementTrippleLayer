@@ -13,6 +13,7 @@ namespace ProduktVerwaltungTrippleLayer
         public TUI(IFachkonzept iF)
         {
             this.iF = iF;
+            ConsoleManager.Show();
             DoCommand(Menu());
         }
 
@@ -41,6 +42,7 @@ namespace ProduktVerwaltungTrippleLayer
 
         public void DoCommand(char c)
         {
+            Console.WriteLine("");
             switch (c.ToString().ToLower())
             {
                 case "a":
@@ -87,7 +89,6 @@ namespace ProduktVerwaltungTrippleLayer
             Console.WriteLine("Kunde " + i + ":");
             Console.WriteLine("Vorname: " + this.iF.GetCustomerFirstName(i));
             Console.WriteLine("Nachname: " + this.iF.GetCustomerName(i));
-            Console.WriteLine("-------------------------------");
         }
 
         public void ShowProduct(int i)
@@ -96,20 +97,16 @@ namespace ProduktVerwaltungTrippleLayer
             Console.WriteLine("Bezeichnung: " + this.iF.GetProductLabel(i));
             Console.WriteLine("Typ: " + this.iF.GetProductTyp(i));
             Console.WriteLine("Preis: " + this.iF.GetProductPrice(i));
-            Console.WriteLine("-------------------------------");
         }
-        public void ShowOrder(Order o)
+        public void ShowOrder(int i)
         {
-            Console.WriteLine("Kunde " + o.Customer.ID + ":");
-            Console.WriteLine("Vorname: " + o.Customer.sFirstName);
-            Console.WriteLine("Nachname: " + o.Customer.sSurName);
-            Console.WriteLine("Produkt " + o.Product.ID + ":");
-            Console.WriteLine("Bezeichnung: " + o.Product.sLabel);
-            Console.WriteLine("Typ: " + o.Product.sTyp);
-            Console.WriteLine("Preis: " + o.Product.dPrice);
-            Console.WriteLine("Menge: " + o.iAmount);
-            Console.WriteLine("Gesamtpreis: " + (o.Product.dPrice * o.iAmount));
-            Console.WriteLine("-------------------------------");
+            int iCustomer = this.iF.GetOrderCustomerId(i);
+            int iProduct = this.iF.GetOrderProductId(i);
+            ShowCustomer(iCustomer);
+            ShowProduct(iProduct);
+            Console.WriteLine("Menge: " + this.iF.GetOrderAmount(i));
+            Console.WriteLine("Gesamtpreis: " + this.iF.GetOrderTotalPrice(i));
+            Console.WriteLine("Bestelldatum: " + this.iF.GetOrderDate(i));
         }
 
         public void ListCustomers()
@@ -118,6 +115,7 @@ namespace ProduktVerwaltungTrippleLayer
             foreach (int i in Customers)
             {
                 ShowCustomer(i);
+                Console.WriteLine("-------------------------------");
             }
             Console.WriteLine("Drücken Sie eine beliebige Taste um zum Menü zurückzukehren.");
             Console.ReadKey();
@@ -130,7 +128,11 @@ namespace ProduktVerwaltungTrippleLayer
             string sFirstName = Console.ReadLine();
             Console.WriteLine("Bitte geben Sie den Nachnamen ein.");
             string sName = Console.ReadLine();
-            this.iF.AddCustomer(sFirstName, sName);
+            int iCustomer = this.iF.AddCustomer(sFirstName, sName);
+            if (iCustomer != -1)
+                Console.WriteLine("Kunde wurde erfolgreich angelegt. Kundennummer: " + iCustomer + "\n");
+            else
+                Console.WriteLine("Kunde konnte nicht angelegt werden.\n");
             DoCommand(Menu());
         }
 
@@ -180,6 +182,7 @@ namespace ProduktVerwaltungTrippleLayer
             foreach (int i in Products)
             {
                 ShowProduct(i);
+                Console.WriteLine("-------------------------------");
             }
             Console.WriteLine("Drücken Sie eine beliebige Taste um zum Menü zurückzukehren.");
             Console.ReadKey();
@@ -192,7 +195,11 @@ namespace ProduktVerwaltungTrippleLayer
             string sLabel = Console.ReadLine();
             Console.WriteLine("Bitte geben Sie den Preis ein.");
             double dPrice = ValidateDouble(Console.ReadLine());
-            this.iF.AddProduct(sLabel, dPrice);
+            int iProduct = this.iF.AddProduct(sLabel, dPrice);
+            if (iProduct != -1)
+                Console.WriteLine("Produkt erfolgreich erstellt. Produktnummer: " + iProduct + "\n");
+            else
+                Console.WriteLine("Produkt konnte nicht erstellt werden.\n");
             DoCommand(Menu());
         }
 
@@ -238,10 +245,11 @@ namespace ProduktVerwaltungTrippleLayer
 
         public void ListOrders()
         {
-            List<Order> Orders = iF.ListOrders();
-            foreach (Order o in Orders)
+            List<int> Orders = iF.ListOrders();
+            foreach (int i in Orders)
             {
-                ShowOrder(o);
+                ShowOrder(i);
+                Console.WriteLine("-------------------------------");
             }
             Console.WriteLine("Drücken Sie eine beliebige Taste um zum Menü zurückzukehren.");
             Console.ReadKey();
@@ -250,15 +258,18 @@ namespace ProduktVerwaltungTrippleLayer
 
         public void AddOrder()
         {
-            Order o = new Order();
             Console.WriteLine("Bitte geben Sie die Kunden-ID ein.");
-            o.Customer = this.iF.GetCustomer(ValidateInt(Console.ReadLine()));
+            int iCustomer = ValidateInt(Console.ReadLine());
             Console.WriteLine("Bitte geben Sie die Produkt-ID ein.");
-            o.Product = this.iF.GetProduct(ValidateInt(Console.ReadLine()));
+            int iProduct = ValidateInt(Console.ReadLine());
             Console.WriteLine("Bitte geben Sie die Menge ein.");
-            o.iAmount = ValidateInt(Console.ReadLine());
-            o.OrderDate = DateTime.Now;
-            this.iF.AddOrder(o);
+            int iAmount = ValidateInt(Console.ReadLine());
+            DateTime dtOrderDate = DateTime.Now;
+            int iOrder = this.iF.AddOrder(iCustomer, iProduct, iAmount, dtOrderDate);
+            if (iOrder != -1)
+                Console.WriteLine("Bestellung erfolgreich erstellt. Bestellnummer: " + iOrder + "\n");
+            else
+                Console.WriteLine("Bestellung konnte nicht erstellt werden.\n");
             DoCommand(Menu());
         }
 

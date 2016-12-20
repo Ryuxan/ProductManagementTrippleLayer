@@ -69,13 +69,13 @@ namespace ProduktVerwaltungTrippleLayer
             return this.iD.GetProduct(productId);
         }
 
-        public override void AddProduct(string sLabel, double dPrice)
+        public override int AddProduct(string sLabel, double dPrice)
         {
             Product p = new Product();
             p.sLabel = sLabel;
             p.dPrice = dPrice;
             p.sTyp = "";
-            this.iD.AddProduct(p);
+            return this.iD.AddProduct(p);
         }
 
         public override void DeleteProduct(int productId)
@@ -93,14 +93,25 @@ namespace ProduktVerwaltungTrippleLayer
             this.iD.EditProduct(p);
         }
 
-        //public List<Order> ListOrders()
-        //{
-        //    List<Order> Orders = this.iD.ListOrders();
-        //    return Orders.OrderBy(x => x.Customer.ID).ToList();
-        //}
-
-        public override int AddOrder(Order o)
+        public override List<int> ListOrders()
         {
+            List<Order> Orders = this.iD.ListOrders();
+            Orders = Orders.OrderBy(x => x.Customer.ID).ToList();
+            List<int> OrderIDs = new List<int>();
+            foreach (Order o in Orders)
+            {
+                OrderIDs.Add(o.ID);
+            }
+            return OrderIDs;
+        }
+
+        public override int AddOrder(int iCustomer, int iProduct, int iAmount, DateTime dtOrderDate)
+        {
+            Order o = new Order();
+            o.Customer = this.iD.GetCustomer(iCustomer);
+            o.Product = this.iD.GetProduct(iProduct);
+            o.iAmount = iAmount;
+            o.OrderDate = dtOrderDate;
             return this.iD.AddOrder(o);
         }
 
@@ -136,19 +147,25 @@ namespace ProduktVerwaltungTrippleLayer
 
         public override int GetOrderCustomerId(int orderId)
         {
-            throw new NotImplementedException();
+            return GetOrder(orderId).Customer.ID;
         }
         public override int GetOrderProductId(int orderId)
         {
-            throw new NotImplementedException();
+            return GetOrder(orderId).Product.ID;
         }
         public override int GetOrderAmount(int orderId)
         {
-            throw new NotImplementedException();
+            return GetOrder(orderId).iAmount;
         }
         public override DateTime GetOrderDate(int orderId)
         {
-            throw new NotImplementedException();
+            return GetOrder(orderId).OrderDate;
+        }
+        public override double GetOrderTotalPrice(int orderId)
+        {
+            int iAmount = GetOrderAmount(orderId);
+            double dPrice = GetProductPrice(GetOrderProductId(orderId));
+            return dPrice * iAmount;
         }
 
         public override int AddCustomer(Customer c)
@@ -174,19 +191,14 @@ namespace ProduktVerwaltungTrippleLayer
         public override void EditProduct(Product product)
         {
             throw new NotImplementedException();
-        }
+        }       
 
         public override void EditProduct(int productID, string label, string type, double price)
         {
             throw new NotImplementedException();
         }
 
-        public override int AddOrder(int customerID, int ProductID, int menge, DateTime date)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override List<Order> ListOrders()
+        public override int AddOrder(Order ord)
         {
             throw new NotImplementedException();
         }

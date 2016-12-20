@@ -38,13 +38,14 @@ namespace ProduktVerwaltungTrippleLayer
         public abstract double GetProductPrice(int productId);
         public abstract string GetProductTyp(int productId);
         public abstract int AddProduct(Product product);
-        public abstract void AddProduct(string sLabel, double dPrice);
+        public abstract int AddProduct(string sLabel, double dPrice);
         public abstract int AddProduct(string label, string type, double price);
         public abstract void DeleteProduct(int productId);
         public abstract void EditProduct(Product product);
         public abstract void EditProduct(int productId, string sLabel, double dPrice);
         public abstract void EditProduct(int productID, string label, string type, double price);
-        public abstract List<Order> ListOrders();
+        //public abstract List<Order> ListOrders();
+        public abstract List<int> ListOrders();
         public abstract int AddOrder(Order ord);
         public abstract int AddOrder(int customerID, int ProductID, int menge, DateTime date);
         public abstract Order GetOrder(int orderId);
@@ -52,6 +53,7 @@ namespace ProduktVerwaltungTrippleLayer
         public abstract int GetOrderProductId(int orderId);
         public abstract int GetOrderAmount(int orderId);
         public abstract DateTime GetOrderDate(int orderId);
+        public abstract double GetOrderTotalPrice(int orderId);
     }
 }
 

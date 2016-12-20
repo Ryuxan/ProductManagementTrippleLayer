@@ -76,6 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="ConsoleManager.cs" />
     <Compile Include="Fachkonzept1.cs" />
     <Compile Include="TUI.cs" />
     <Page Include="MainWindow.xaml">

@@ -121,10 +121,10 @@ namespace ProduktVerwaltungTrippleLayer
         //    return this.Datenhaltung.ListProducts();
         //}
 
-        public override List<Order> ListOrders()
-        {
-            return this.Datenhaltung.ListOrders();
-        }
+        //public override List<Order> ListOrders()
+        //{
+        //    return this.Datenhaltung.ListOrders();
+        //}
 
         public override string GetCustomerName(int customerId)
         {
@@ -151,13 +151,13 @@ namespace ProduktVerwaltungTrippleLayer
             return this.Datenhaltung.GetProduct(productId).sTyp;
         }
 
-        public override void AddProduct(string sLabel, double dPrice)
+        public override int AddProduct(string sLabel, double dPrice)
         {
             Product cache = new Product();
             cache.sLabel = sLabel;
             cache.dPrice = dPrice;
 
-            this.AddProduct(cache);
+            return this.AddProduct(cache);
         }
 
         public override Order GetOrder(int orderId)
@@ -217,6 +217,24 @@ namespace ProduktVerwaltungTrippleLayer
             }
 
             return prodIDs;
+        }
+
+        public override List<int> ListOrders()
+        {
+            List<Order> Orders = this.Datenhaltung.ListOrders();
+            List<int> OrderIDs = new List<int>();
+            foreach (Order o in Orders)
+            {
+                OrderIDs.Add(o.ID);
+            }
+            return OrderIDs;
+        }
+
+        public override double GetOrderTotalPrice(int orderId)
+        {
+            int iAmount = GetOrderAmount(orderId);
+            double dPrice = GetProductPrice(GetOrderProductId(orderId));
+            return dPrice * iAmount;
         }
     }
 }
