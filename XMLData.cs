@@ -101,7 +101,7 @@ namespace ProduktVerwaltungTrippleLayer
             var products = elements.Select(p => new Product
                 (
                     label: p.Descendants("label").FirstOrDefault().Value,
-                    price: Convert.ToDouble(p.Descendants("price").FirstOrDefault().Value)
+                    price: Convert.ToDouble(p.Descendants("price").FirstOrDefault().Value, System.Globalization.CultureInfo.CurrentCulture)
                 )
                 {
                     ID = Convert.ToInt16(p.Descendants("id").FirstOrDefault().Value)
@@ -135,8 +135,7 @@ namespace ProduktVerwaltungTrippleLayer
         {
             XDocument xml = XDocument.Load(productsPath);
             var lastProduct = xml.Root.Descendants("product").Last();
-            int newId = Convert.ToInt16(lastProduct.Descendants("id").FirstOrDefault()) + 1;
-
+            int newId = Convert.ToInt16(lastProduct.Descendants("id").FirstOrDefault().Value) + 1;            
             XElement newProduct = new XElement(
                 "product",
                 new XElement("id", newId),
@@ -195,7 +194,7 @@ namespace ProduktVerwaltungTrippleLayer
             XDocument xml = XDocument.Load(ordersPath);
             // todo check empty
             var lastOrder = xml.Root.Descendants("order").Last();
-            int newId = Convert.ToInt16(lastOrder.Descendants("id").FirstOrDefault()) + 1;
+            int newId = Convert.ToInt16(lastOrder.Descendants("id").FirstOrDefault().Value) + 1;
 
             XElement newOrder = new XElement(
                 "order",
