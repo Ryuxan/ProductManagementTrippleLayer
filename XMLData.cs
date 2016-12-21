@@ -54,8 +54,13 @@ namespace ProduktVerwaltungTrippleLayer
         public override int AddCustomer(Customer customer)
         {
             XDocument xml = XDocument.Load(customerPath);
-            var lastCustomer = xml.Root.Descendants("customer").Last();
-            int newId = Convert.ToInt16(lastCustomer.Descendants("id").FirstOrDefault().Value) + 1;
+            var lastCustomer = xml.Root.Descendants("customer").LastOrDefault();
+
+            int newId = 0;
+            if (lastCustomer != null)
+            {
+                newId = Convert.ToInt16(lastCustomer.Descendants("id").FirstOrDefault().Value) + 1;
+            }
 
             XElement newCustomer = new XElement(
                 "customer",
@@ -134,8 +139,13 @@ namespace ProduktVerwaltungTrippleLayer
         public override int AddProduct(Product product)
         {
             XDocument xml = XDocument.Load(productsPath);
-            var lastProduct = xml.Root.Descendants("product").Last();
-            int newId = Convert.ToInt16(lastProduct.Descendants("id").FirstOrDefault().Value) + 1;            
+            var lastProduct = xml.Root.Descendants("product").LastOrDefault();
+
+            int newId = 0;
+            if (lastProduct != null)
+            {
+                newId = Convert.ToInt16(lastProduct.Descendants("id").FirstOrDefault().Value) + 1;
+            }
             XElement newProduct = new XElement(
                 "product",
                 new XElement("id", newId),
@@ -155,7 +165,10 @@ namespace ProduktVerwaltungTrippleLayer
             var product = xml.Descendants("customer")
                 .Where(p => p.Descendants("id").FirstOrDefault().Value == productId.ToString())
                 .FirstOrDefault();
-            product.Remove();
+            if (product != null)
+            {
+                product.Remove();
+            }
             xml.Save(productsPath);
         }
 
@@ -188,13 +201,18 @@ namespace ProduktVerwaltungTrippleLayer
 
             return orders.ToList();
         }
-
+        
         public override int AddOrder(Order order)
         {
             XDocument xml = XDocument.Load(ordersPath);
             // todo check empty
-            var lastOrder = xml.Root.Descendants("order").Last();
-            int newId = Convert.ToInt16(lastOrder.Descendants("id").FirstOrDefault().Value) + 1;
+            var lastOrder = xml.Root.Descendants("order").LastOrDefault();
+
+            var newId = 0;
+            if (lastOrder != null)
+            {
+                newId = Convert.ToInt16(lastOrder.Descendants("id").FirstOrDefault().Value) + 1;
+            }
 
             XElement newOrder = new XElement(
                 "order",
@@ -212,7 +230,24 @@ namespace ProduktVerwaltungTrippleLayer
 
         public override Order GetOrder(int orderId)
         {
-            throw new NotImplementedException();
+            XDocument xml = XDocument.Load(ordersPath);
+            var elements = xml.Root.Descendants("order");
+
+            var order = elements
+                .Where(o => o.Descendants("id").FirstOrDefault().Value == orderId.ToString())
+                .Select(o => new Order
+                (
+                    c: GetCustomer(Convert.ToInt16(o.Descendants("customerId").FirstOrDefault().Value)),
+                    p: GetProduct(Convert.ToInt16(o.Descendants("productId").FirstOrDefault().Value)),
+                    amount: Convert.ToInt16(o.Descendants("amount").FirstOrDefault().Value),
+                    orderDate: new DateTime(Convert.ToInt64(o.Descendants("orderDate").FirstOrDefault().Value))
+                )
+                {
+                    ID = Convert.ToInt16(o.Descendants("id").FirstOrDefault().Value)
+                }
+            ).FirstOrDefault();
+
+            return order;
         }
     }
 }
